@@ -1,0 +1,33 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  text-align: center;
+  background-color: #ffffff;
+  color: #1a2435;
+}
+
+.text-box {
+}
+
+.games {
+  display: inline-flex;
+  margin-top: 8rem;
+}
+
+.games button {
+  margin-left: 25rem;
+  margin-right: 25rem;
+}
+
+.titleCard {
+  width: 100%;
+  background-color: #4257b2;
+  color: #ffffff;
+}
+
+.title {
+  margin: 15px;
+}
