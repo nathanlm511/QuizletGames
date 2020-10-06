@@ -25,6 +25,7 @@ export const HomePage = () => {
   const startGame = () => {
     parser();
     //   Start selected game here
+    window.location = "/concentration";
   };
   return (
     <div className="App">
@@ -45,3 +46,5 @@ export const HomePage = () => {
     </div>
   );
 };
+
+export default HomePage
