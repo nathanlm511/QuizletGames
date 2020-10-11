@@ -67,7 +67,9 @@ export const HomePage = () => {
     // Problems: Accept all delimeters and options??? ie commas, tabs, spaces
     for (let i = 0; i < cards.length; i++) {
       singleCards = cards[i].split("\t");
-      cardObject[singleCards[0]] = singleCards[1];
+      if (singleCards[0] != "") {
+        cardObject[singleCards[0]] = singleCards[1];
+      }
     }
     console.log(cardObject);
     setParsedValues(cardObject);
