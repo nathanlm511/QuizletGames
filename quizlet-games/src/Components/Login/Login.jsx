@@ -7,6 +7,7 @@ export const Login = ({ setUser, user, setSignUpDisplay }) => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
+  const [userName, setUserName] = useState("");
 
   const clearInputs = () => {
     setEmail("");
@@ -45,6 +46,11 @@ export const Login = ({ setUser, user, setSignUpDisplay }) => {
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        return result.user.updateProfile({
+          displayName: userName,
+        });
+      })
       .catch((error) => {
         switch (error.code) {
           case "auth/email-already-in-use":
@@ -60,18 +66,11 @@ export const Login = ({ setUser, user, setSignUpDisplay }) => {
     setSignUpDisplay(true);
   };
 
-  const handleUser = (value) => {
-    setUser(value);
-  };
-
   useEffect(() => {
     const authListener = () => {
       fire.auth().onAuthStateChanged((user) => {
         if (user) {
           clearInputs();
-          handleUser(user);
-        } else {
-          handleUser("");
         }
       });
     };
@@ -90,10 +89,9 @@ export const Login = ({ setUser, user, setSignUpDisplay }) => {
       )}
 
       <div>
-        <label>Username</label>
+        <label>Email</label>
         <input
           type="text"
-          autoFocus
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}

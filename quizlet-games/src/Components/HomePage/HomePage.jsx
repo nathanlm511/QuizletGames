@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { fire } from "../../Auth/firebase";
 import "./HomePage.css";
@@ -10,6 +10,19 @@ export const HomePage = () => {
   const [parsedValue, setParsedValues] = useState({});
   const [user, setUser] = useState("");
   const [signUpDisplay, setSignUpDisplay] = useState(true);
+  useEffect(() => {
+    const authListener = () => {
+      fire.auth().onAuthStateChanged((user) => {
+        if (user) {
+          setUser(user);
+          console.log(user);
+        } else {
+          setUser("");
+        }
+      });
+    };
+    authListener();
+  }, []);
 
   const handleChange = (e) => {
     setStudyValues(e.target.value);
