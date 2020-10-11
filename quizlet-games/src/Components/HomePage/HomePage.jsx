@@ -36,33 +36,6 @@ const useStyles = makeStyles({
   }
 });
 
-import Carousel from 'react-material-ui-carousel'
-
-import GameCard from './GameCard';
-
-import { makeStyles } from '@material-ui/core/styles';
-import { Container,
-         Box,
-         Card,
-         Paper,
-         Button,
-         TextField
-         } from '@material-ui/core';
-
-const useStyles = makeStyles({
-  titleCard: {
-    width: '100%',
-    backgroundColor: '#4257b2',
-    color: '#ffffff',
-    display:'flex',
-    marginBottom: '30px',
-    marginTop: '30px',
-    width: '80%',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
-
 export const HomePage = () => {
   const classes = useStyles();
 
