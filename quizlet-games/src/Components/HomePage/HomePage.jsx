@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { fire } from "../../Auth/firebase";
 import "./HomePage.css";
+import { Login } from "../Login/Login";
+import { Link } from "react-router-dom";
 
 export const HomePage = () => {
   const [studyValues, setStudyValues] = useState([]);
   const [parsedValue, setParsedValues] = useState({});
+  const [user, setUser] = useState("");
+  const [signUpDisplay, setSignUpDisplay] = useState(true);
+  useEffect(() => {
+    const authListener = () => {
+      fire.auth().onAuthStateChanged((user) => {
+        if (user) {
+          setUser(user);
+          console.log(user);
+        } else {
+          setUser("");
+        }
+      });
+    };
+    authListener();
+  }, []);
 
   const handleChange = (e) => {
     setStudyValues(e.target.value);
@@ -27,24 +45,69 @@ export const HomePage = () => {
     //   Start selected game here
     window.location = "/concentration";
   };
-  return (
-    <div className="App">
-      <div className="titleCard">
-        <h2 className="title">Quizlet Games</h2>
-      </div>
-      <textarea
-        className="text-box"
-        placeholder="Enter data here"
-        onChange={handleChange}
-      ></textarea>
-      <div className="games">
-        <p className="single">Single Player</p>
-        <button onClick={startGame}>Start</button>
+  const handleLogOut = () => {
+    fire.auth().signOut();
+    setSignUpDisplay(!signUpDisplay);
+  };
 
-        <p className="multi">Multiplayer</p>
-      </div>
-    </div>
+  const bodyDisplay = () => {
+    if (signUpDisplay) {
+      return (
+        <>
+          <textarea
+            className="text-box"
+            placeholder="Enter data here"
+            onChange={handleChange}
+          />
+          <div className="games">
+            <p className="single">Single Player</p>
+            <button onClick={startGame}>Start</button>
+
+            <p className="multi">Multiplayer</p>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <Login
+          setUser={setUser}
+          user={user}
+          setSignUpDisplay={setSignUpDisplay}
+        />
+      );
+    }
+  };
+
+  const navDisplay = () => {
+    if (user) {
+      return (
+        <nav className="titleCard">
+          <h2 className="title">Quizlet Games</h2>
+          <button onClick={handleLogOut}>Log Out</button>
+        </nav>
+      );
+    } else {
+      return (
+        <nav className="titleCard">
+          <h2 className="title">Quizlet Games</h2>
+          <button
+            onClick={() => {
+              setSignUpDisplay(!signUpDisplay);
+            }}
+          >
+            Sign Up or Log In
+          </button>
+        </nav>
+      );
+    }
+  };
+  return (
+    <>
+      {navDisplay()}
+
+      <div className="App">{bodyDisplay()}</div>
+    </>
   );
 };
 
-export default HomePage
+export default HomePage;
