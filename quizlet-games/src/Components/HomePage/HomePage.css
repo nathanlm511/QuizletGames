@@ -5,16 +5,19 @@
   align-items: center;
   font-size: calc(10px + 2vmin);
   text-align: center;
-  background-color: #ffffff;
+  background-color: #d5f3fe;
   color: #1a2435;
+  width: 100%;
 }
 
 .text-box {
 }
 
 .games {
-  display: inline-flex;
-  margin-top: 8rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .games button {
@@ -26,8 +29,46 @@
   width: 100%;
   background-color: #4257b2;
   color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+  align-items: center;
+  justify-content: center;
 }
 
 .title {
   margin: 15px;
+  text-align: center;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+}
+
+.single-player-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.multi-player-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 50px;
+  align-items: center;
+  justify-content: space-evenly;
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+
+.text-field--container {
+  width: 80%;
 }
