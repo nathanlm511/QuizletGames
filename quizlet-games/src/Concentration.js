@@ -44,6 +44,14 @@ class Concentration extends Component {
                 },
             ]
         };
+        var data = JSON.parse(window.localStorage.getItem('Cards'));
+        var importedPairs = [];
+        for (var key in data) {
+            let value = data[key];
+            importedPairs.push({word: key, match: value});
+            importedPairs.push({word: value, match: key});
+        }
+        this.state.pairs = importedPairs;
     }
 
     handleClick = (e) => {

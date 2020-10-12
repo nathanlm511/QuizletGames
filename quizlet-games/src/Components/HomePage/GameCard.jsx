@@ -32,7 +32,25 @@ class GameCard extends Component {
     }
 
     handleClick = () => {
-        window.location = this.props.game.link;
+        var isValid = true;
+        // check if empty
+        if (JSON.stringify(this.props.quizletData) == JSON.stringify({})) {
+            isValid = false;
+        }
+        // iterate across and check that each card is valid
+        for (var card in this.props.quizletData) {
+            if (this.props.quizletData[card] === undefined) {
+                isValid = false;
+                break;
+            }
+        }
+        if (isValid) {
+            window.localStorage.setItem('Cards', JSON.stringify(this.props.quizletData));
+            window.location = '/concentration';
+        }
+        else {
+            alert('Quizlet cards are invalid');
+        }
     }
 
     render() {
