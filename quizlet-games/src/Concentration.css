@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin: 30px;
 }
 
 .card {
@@ -12,9 +13,19 @@
     height: 200px;
     width: 120px;
     background-color: grey;
-    margin: 10px;
+    background-image: url('./images/cardback.jpg');
+    background-size: contain;
+    margin: 30px;
+    font-size: 0.75vw;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    border-radius: 5px;
+}
+
+.card-flipped {
+    background-image: none;
+    background-color: white;
 }
 
 .green {
-    background-color: green;
+    background-color: #CCFFCC;
 }
