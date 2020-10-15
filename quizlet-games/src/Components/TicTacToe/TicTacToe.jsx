@@ -2,11 +2,13 @@ import React from "react";
 import "./TicTacToe.css";
 import { fire } from "../../Auth/firebase";
 
+import { Button } from '@material-ui/core';
+
 function Square(props) {
   return (
-    <button className="square" onClick={props.onClick}>
+    <div className="square" onClick={props.onClick}>
       {props.value}
-    </button>
+    </div>
   );
 }
 
@@ -154,31 +156,30 @@ export default class Game extends React.Component {
     let toDisable = this.state.isX === this.state.xIsNext;
 
     if (winner) {
-      status = winner + "wins";
+      status = winner + " wins!";
       showReset = true;
     } else if (noWin) {
       status = "No Winners";
       showReset = true;
     } else {
       if (toDisable) {
-        status = "it's your turn!";
+        status = "It's your turn!";
       } else {
-        status = "waiting opponent... ";
+        status = "Waiting for opponent... ";
       }
     }
 
     return (
       <div className="game">
-        <div className="game-board">
           {showCode && (
-            <>
-              <b>share URL</b>
+            <div className="share">
+              <b>Share this URL to play with a friend!</b>
               <p>
                 <a href={window.location.href}>
                   {window.location.host}/{window.location.pathname.substr(1)}
                 </a>
               </p>
-            </>
+            </div>
           )}
           <Board
             squares={current.squares}
@@ -186,22 +187,21 @@ export default class Game extends React.Component {
             disabled={toDisable}
           />
           <div className="info">
-            {this.state.isX ? <div>you're X</div> : <div>you're O</div>}
+            {this.state.isX ? <div>You're X</div> : <div>You're O</div>}
 
             <b>{status}</b>
           </div>
 
           {showReset && (
-            <button
-              outline
-              size="sm"
-              theme="danger"
+            <Button
+              color="primary"
+              variant="contained"
+              className="ticButton"
               onClick={() => this.reset()}
             >
               reset
-            </button>
+            </Button>
           )}
-        </div>
       </div>
     );
   }

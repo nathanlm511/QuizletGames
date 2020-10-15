@@ -46,7 +46,7 @@ class GameCard extends Component {
         }
         if (isValid) {
             window.localStorage.setItem('Cards', JSON.stringify(this.props.quizletData));
-            window.location = '/concentration';
+            window.location = this.props.game.link;
         }
         else {
             alert('Quizlet cards are invalid');

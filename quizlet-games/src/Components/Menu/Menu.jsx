@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { fire } from "../../Auth/firebase";
 import "./Menu.css";
 
+import { Paper, TextField, Button, InputAdornment } from '@material-ui/core';
+
 export default () => {
   const refURL = fire.database().ref("game");
   const [url, setURL] = useState("");
@@ -39,21 +41,27 @@ export default () => {
   };
 
   return (
-    <>
-      <h4>Tic Tac Toe</h4>
-      <div>
-        <form onSubmit={submitURL}>
-          <input
-            onChange={(e) => setURL(e.target.value)}
-            value={url}
-            placeholder="Enter invite code"
-          />
-          <button>{">"}</button>
-        </form>
-      </div>
-      <div className="button">
-        <button onClick={() => createGame()}>Create New Game</button>
-      </div>
-    </>
+    <div className="menu-container">
+      <Paper className="menu-paper">
+        <div className="title-menu">Tic Tac Toe</div>
+        <div>
+          <form onSubmit={submitURL}>
+            <TextField
+              variant="filled"
+              onChange={(e) => setURL(e.target.value)}
+              value={url}
+              label="Enter invite code"
+              >
+            </TextField>
+          </form>
+          <div className="buttons">
+            <Button variant='contained' color="primary" type="submit">{"Join a lobby"}</Button>
+            <span className="or">or</span>
+            <Button variant='contained' color="primary" onClick={() => createGame()}>Create Game</Button>
+          </div>
+        </div>
+        
+      </Paper>
+    </div>
   );
 };
