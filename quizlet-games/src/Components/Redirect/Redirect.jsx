@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { fire } from "../../Auth/firebase";
 import TicTacToe from "../TicTacToe/TicTacToe";
+
+import './Redirect.css';
+
 export default () => {
   const [exist, setExist] = useState(0);
   useEffect(() => {
@@ -22,21 +25,22 @@ export default () => {
   };
 
   return (
-    <div>
+    <div className="redirect-container">
       {exist === 0 && (
-        <div>
+        <div className="tic-tac-toe-header">
           <p>Loading Game..</p>
           <a href="/">Go Back?</a>
         </div>
       )}
       {exist === 1 && (
-        <div>
+        <div className="tic-tac-toe-header">
           <p>URL not found</p>
           <a href="/">Go Back?</a>
         </div>
       )}
-
-      {exist === 2 && <TicTacToe />}
+      <div className='tic-tac-toe-content'> 
+         {exist === 2 && <TicTacToe />}
+      </div>
     </div>
   );
 };

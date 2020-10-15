@@ -146,9 +146,9 @@ export const HomePage = () => {
     {
       photo: "tic.png",
       link: "/menu",
-      name: "Tic-Tac-Toe (WIP)",
+      name: "Tic-Tac-Toe",
       description:
-        "Tic the tac the toe. This is placeholder text FJSDIFSDFSDIFJSDFJSIDF",
+        "In this classic game of 3 in a row, answer questions to make a move before your opponent",
     },
     {
       photo: "connect4.png",
