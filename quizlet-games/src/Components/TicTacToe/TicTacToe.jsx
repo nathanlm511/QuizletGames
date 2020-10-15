@@ -2,7 +2,7 @@ import React from "react";
 import "./TicTacToe.css";
 import { fire } from "../../Auth/firebase";
 
-import { Button } from '@material-ui/core';
+import { Button, Paper, TextField} from '@material-ui/core';
 
 function Square(props) {
   return (
@@ -13,6 +13,7 @@ function Square(props) {
 }
 
 class Board extends React.Component {
+
   renderSquare(i) {
     return (
       <>
@@ -68,8 +69,22 @@ export default class Game extends React.Component {
     super(props);
     this.state = {
       ...initialState,
+      cards: [],
+      currentCard: 0,
+      answer: ""
     };
+    var data = JSON.parse(window.localStorage.getItem('Cards'));
+    var importedCards = [];
+    for (var key in data) {
+        let value = data[key];
+        importedCards.push({question: value, answer: key});
+    }
+    this.state.cards = importedCards;
+    this.state.currentCard = Math.floor(Math.random() * Math.floor(importedCards.length));
+    console.log(this.state.cards);
+    this.checkQuestion = this.checkQuestion.bind(this);
   }
+
   componentDidMount() {
     const key = window.location.pathname.substr(1);
     if (localStorage.getItem(key)) {
@@ -144,6 +159,14 @@ export default class Game extends React.Component {
       .child(window.location.pathname.substr(1))
       .set(initialState);
   }
+
+  checkQuestion() {
+    if (this.state.answer == this.state.cards[this.state.currentCard].answer) {
+      alert('Correct! Now make a move :)');
+      this.setState({currentCard: Math.floor(Math.random() * Math.floor(this.state.cards.length)), answer: ""});
+    }
+  }
+  
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -171,20 +194,37 @@ export default class Game extends React.Component {
 
     return (
       <div className="game">
-          {showCode && (
+        <Paper className="tic-tac-toe-header">
+        {showCode && (
             <div className="share">
-              <b>Share this URL to play with a friend!</b>
-              <p>
+              <b>Share this URL to play with a friend:  </b>
                 <a href={window.location.href}>
                   {window.location.host}/{window.location.pathname.substr(1)}
                 </a>
-              </p>
             </div>
           )}
+          <div>
+            Write the answer to: <span>{this.state.cards[this.state.currentCard].question}</span>
+          </div>
+          <div className="tic-tac-toe-form-container">
+            <form className="ticForm"> 
+              <TextField
+                variant="filled"
+                value={this.state.answer}
+                onChange={(e) => {this.setState({answer: e.target.value})}}
+                label="Enter answer"
+                >
+              </TextField>
+            </form>
+            <Button variant='contained' color="primary" onClick={this.checkQuestion}>{"Submit"}</Button>
+          </div>
+        </Paper>
+          
           <Board
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
             disabled={toDisable}
+            className="board"
           />
           <div className="info">
             {this.state.isX ? <div>You're X</div> : <div>You're O</div>}
