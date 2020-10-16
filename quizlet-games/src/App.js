@@ -1,9 +1,10 @@
 import React from "react";
 import "./App.css";
 
-import HomePage from "./Components/HomePage/HomePage";
-import Concentration from "./Concentration";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import HomePage from './Components/HomePage/HomePage';
+import Concentration from './Concentration';
+import Connect4 from './Connect4';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { Route, Switch } from "react-router-dom";
 import { Login } from "./Components/Login/Login";
@@ -16,6 +17,7 @@ function App() {
     <div className="App">
       <CssBaseline />
       <Switch>
+        <Route path="/connect4" component={Connect4} />
         <Route path="/concentration" component={Concentration} />
         <Route path="/" exact component={HomePage} />
         <Route path="/login" component={Login} />
