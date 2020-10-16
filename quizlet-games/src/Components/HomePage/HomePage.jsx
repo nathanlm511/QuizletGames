@@ -120,27 +120,25 @@ export const HomePage = () => {
   };
 
   var singlePlayerGames = [
-    {
-      photo: "memory.jpg",
-      link: "/concentration",
-      name: "Concentration",
-      description:
-        "Think you got your flash cards memorized? See how quickly you can match them up.",
-    },
-    {
-      photo: "connect4.png",
-      link: "/concentration",
-      name: "Connect 4 (WIP)",
-      description:
-        "A classic game of tactics and strategy. Connect 4 in a row to win!",
-    },
-    {
-      photo: "hangman.jpg",
-      link: "/concentration",
-      name: "Hangman (WIP)",
-      description: "Guess the answer to the flashcard before the man is hung",
-    },
-  ];
+      {
+        photo: "memory.jpg",
+        link: "/concentration",
+        name: "Concentration",
+        description: "Think you got your flash cards memorized? See how quickly you can match them up."
+      },
+      {
+        photo: "connect4.png",
+        link: "/connect4",
+        name: "Connect 4 (WIP)",
+        description: "A classic game of tactics and strategy. Connect 4 in a row to win!"
+      },
+      {
+        photo: "hangman.jpg",
+        link: "/concentration",
+        name: "Hangman (WIP)",
+        description: "Guess the answer to the flashcard before the man is hung"
+      }
+  ]
 
   var multiPlayerGames = [
     {
