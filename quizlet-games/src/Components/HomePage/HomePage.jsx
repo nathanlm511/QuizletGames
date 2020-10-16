@@ -129,7 +129,7 @@ export const HomePage = () => {
       {
         photo: "connect4.png",
         link: "/connect4",
-        name: "Connect 4 (WIP)",
+        name: "Connect 4",
         description: "A classic game of tactics and strategy. Connect 4 in a row to win!"
       },
       {
