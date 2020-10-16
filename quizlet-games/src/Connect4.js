@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Connect4.css';
 
+import { Button, Paper, TextField } from "@material-ui/core";
+
 class Connect4 extends React.Component {
     constructor(props) {
         super(props);
@@ -11,10 +13,40 @@ class Connect4 extends React.Component {
           player1: 1,
           player2: 2,
           gameWon: false,
-          message: ''
+          message: '',
+          cards: [],
+          currentCard: 0,
+          answer: "",
+          questionAnswered: false,
         };
         
         this.playerTurn = this.playerTurn.bind(this);
+
+        var data = JSON.parse(window.localStorage.getItem("Cards"));
+        var importedCards = [];
+        for (var key in data) {
+          let value = data[key];
+          importedCards.push({ question: value, answer: key });
+        }
+        this.state.cards = importedCards;
+        this.state.currentCard = Math.floor(
+          Math.random() * Math.floor(importedCards.length)
+        );
+        console.log(this.state.cards);
+        this.checkQuestion = this.checkQuestion.bind(this);
+      }
+
+      checkQuestion() {
+        if (this.state.answer == this.state.cards[this.state.currentCard].answer) {
+          alert("Correct! Now make a move :)");
+          this.setState({
+            currentCard: Math.floor(
+              Math.random() * Math.floor(this.state.cards.length)
+            ),
+            answer: "",
+            questionAnswered: true,
+          });
+        }
       }
       
       // Start the game.
@@ -48,26 +80,33 @@ class Connect4 extends React.Component {
 
       // Play the game.
       playerTurn(position) {
-        if (!this.state.gameWon) {
-          var board = this.state.board;
-          for (var i = 5; i >= 0; i--) {
-            if (!board[i][position]) {
-              board[i][position] = this.state.currentPlayer;
-              break;
+        if (this.state.questionAnswered) {
+          if (!this.state.gameWon) {
+            var board = this.state.board;
+            for (var i = 5; i >= 0; i--) {
+              if (!board[i][position]) {
+                board[i][position] = this.state.currentPlayer;
+                break;
+              }
             }
-          }
-    
-          var result = this.checkWin(board);
-          if (result === this.state.player1) {
-            this.setState({ board, gameWon: true, message: 'Player 1 (blue) wins!' });
-          } else if (result === this.state.player2) {
-            this.setState({ board, gameWon: true, message: 'Player 2 (purple) wins!' });
+      
+            var result = this.checkWin(board);
+            if (result === this.state.player1) {
+              this.setState({ board, gameWon: true, message: 'Player 1 (blue) wins!' });
+            } else if (result === this.state.player2) {
+              this.setState({ board, gameWon: true, message: 'Player 2 (purple) wins!' });
+            } else {
+              this.setState({ board, currentPlayer: this.switchPlayer() });
+            }
           } else {
-            this.setState({ board, currentPlayer: this.switchPlayer() });
+            this.setState({ message: 'Something went wrong -- please start a new game.' });
           }
-        } else {
-          this.setState({ message: 'Something went wrong -- please start a new game.' });
+          this.setState({questionAnswered: false});
         }
+        else {
+          alert('You haven\'t answered the question :(');
+        }
+        
       }
 
       checkWin(board) {
@@ -136,10 +175,32 @@ class Connect4 extends React.Component {
       
       render() {
         return (
-          <div>
-            <div className="new-game-button" 
-            onClick={() => {this.startGame()}}> New Game 
-            </div>
+          <div className="connect4-container">
+            <Paper className="connect4-header">
+              <div>
+                Write the answer to:{" "}
+                <span>{this.state.cards[this.state.currentCard].question}</span>
+              </div>
+              <div className="connect4-form-container">
+                <form className="connect4Form">
+                  <TextField
+                    variant="filled"
+                    value={this.state.answer}
+                    onChange={(e) => {
+                      this.setState({ answer: e.target.value });
+                    }}
+                    label="Enter answer"
+                  ></TextField>
+                </form>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.checkQuestion}
+                >
+                  {"Submit"}
+                </Button>
+              </div>
+            </Paper>
             
             <table>
               <tbody>
@@ -148,6 +209,10 @@ class Connect4 extends React.Component {
             </table>
             
             <p className="message"> {this.state.message} </p>
+            
+            <div className="new-game-button" 
+            onClick={() => {this.startGame()}}> New Game 
+            </div>
           </div>
         );
       }
@@ -173,7 +238,7 @@ const Row = ({ row, playerTurn }) => {
     }
       
     return (
-      <td>
+      <td className="td">
         <div className="slot" onClick={() => {playerTurn(columnIndex)}}>
           <div className={color}> 
           </div>
